@@ -1,7 +1,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/minimal-notebook:python-3.9.13
+ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-1.4.2
+#ARG BASE_CONTAINER=$OWNER/minimal-notebook
+#ARG BASE_CONTAINER=$OWNER/minimal-notebook:python-3.9.13
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -33,14 +35,15 @@ USER ${NB_UID}
 #     pip install lstchain==$LSTCHAIN_VER && \
 #     rm environment.yml
 
-RUN conda update -n base -c conda-forge conda
-RUN conda install mamba
+#RUN conda update -n base -c conda-forge conda
+RUN conda install -n base -c conda-forge mamba conda==4.12.0
+#RUN conda install mamba
 
 ARG GAMMAPY_REVISION=1.1
 #RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_REVISION
 RUN curl -o environment.yml https://gammapy.org/download/install/gammapy-${GAMMAPY_REVISION}-environment.yml && \
-    mamba env update -n base -f environment.yml && \
-    # mamba env create -f environment.yml && \
+    #mamba env update -n base -f environment.yml && \
+    mamba env create -f environment.yml && \
     rm environment.yml
 
 # Install Python 3 packages
@@ -57,7 +60,6 @@ RUN mamba install -c conda-forge --quiet --yes \
     'h5py' \
     'ipympl'\
     'ipywidgets' \
-    # Temporary fix for: https://github.com/jupyter/docker-stacks/issues/1851
     'jupyter_server>=2.0.0' \
     'matplotlib-base' \
     'numba' \
@@ -83,7 +85,14 @@ RUN mamba install -c conda-forge --quiet --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-RUN ipython kernel install --user --name=gammapy-1.1
+    #mamba activate gammapy-${GAMMAPY_REVISION} && \
+RUN mamba install -n gammapy-$GAMMAPY_REVISION ipykernel && \
+    mamba run -n gammapy-$GAMMAPY_REVISION python -m ipykernel install --user --name gammapy-$GAMMAPY_REVISION --display-name gammapy\ $GAMMAPY_REVISION 
+    #mamba run -n gammapy-$GAMMAPY_REVISION python -m ipykernel install --user --name gammapy-$GAMMAPY_REVISION --display-name gammapy\ $GAMMAPY_REVISION 
+   
+
+RUN mamba install traitlets==5.9.0 -n gammapy-$GAMMAPY_REVISION
+
 
 # RUN jupyter labextension install dask-labextension 
 
