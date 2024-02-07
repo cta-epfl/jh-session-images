@@ -1,7 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-1.4.2
+ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-3.1.1
 #ARG BASE_CONTAINER=$OWNER/minimal-notebook
 #ARG BASE_CONTAINER=$OWNER/minimal-notebook:python-3.9.13
 FROM $BASE_CONTAINER
