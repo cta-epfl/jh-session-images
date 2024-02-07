@@ -91,7 +91,7 @@ RUN mamba install -n gammapy-$GAMMAPY_REVISION ipykernel && \
     #mamba run -n gammapy-$GAMMAPY_REVISION python -m ipykernel install --user --name gammapy-$GAMMAPY_REVISION --display-name gammapy\ $GAMMAPY_REVISION 
    
 
-RUN mamba install traitlets==5.9.0 -n gammapy-$GAMMAPY_REVISION
+RUN mamba install traitlets==5.9.0 -c conda-forge
 
 
 # RUN jupyter labextension install dask-labextension 
