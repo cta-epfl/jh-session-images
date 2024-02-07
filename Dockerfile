@@ -39,7 +39,8 @@ RUN conda install mamba
 ARG GAMMAPY_REVISION=1.1
 #RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_REVISION
 RUN curl -o environment.yml https://gammapy.org/download/install/gammapy-${GAMMAPY_REVISION}-environment.yml && \
-    conda env create -f environment.yml && \
+    mamba env update -n base -f environment.yml && \
+    # mamba env create -f environment.yml && \
     rm environment.yml
 
 # Install Python 3 packages
