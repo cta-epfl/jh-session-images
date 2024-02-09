@@ -21,7 +21,7 @@ labextension:
     class: 'LocalCluster'
     args: []
     kwargs:
-      memory_limit: 20Gb
+      memory_limit: 30Gb
       threads_per_worker: 1
       scheduler_port: 8786
   default:
