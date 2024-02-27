@@ -80,10 +80,14 @@ RUN mamba install -c conda-forge --quiet --yes \
     'xlrd' \
     'dask-labextension' \
     'jupyterlab' \
+    'pip' \
+    'dask-gateway~=2024.1.0' \
     && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6'
 
     #mamba activate gammapy-${GAMMAPY_REVISION} && \
 RUN mamba install -n gammapy-$GAMMAPY_REVISION ipykernel && \
