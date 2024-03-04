@@ -21,6 +21,8 @@ RUN apt-get update --yes && \
     # for latex labels
     cm-super \
     dvipng \
+    # for wheel
+    bison byacc \
     # for matplotlib anim
     ffmpeg \
     curl && \
@@ -123,3 +125,5 @@ USER ${NB_UID}
 ADD dask.yaml /etc/dask/dask.yaml
 
 WORKDIR "${HOME}"
+
+
