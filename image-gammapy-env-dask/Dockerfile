@@ -24,6 +24,7 @@ RUN apt-get update --yes && \
     # for wheel
     bison \
     byacc \
+    flex \
     # for matplotlib anim
     ffmpeg \
     curl && \
