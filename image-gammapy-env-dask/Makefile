@@ -1,5 +1,5 @@
 tag:=$(shell find -type f -exec cat '{}' \; | md5sum | cut -c1-8)
-gammapy_revision?=1.1
+gammapy_revision?=1.2
 lstchain_version?=0.9.6
 
 image:=odahub/jh-cta:$(tag)-gammapy-$(gammapy_revision)-lstchain-$(lstchain_version)
