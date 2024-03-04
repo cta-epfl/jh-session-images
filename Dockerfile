@@ -1,7 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-3.1.1
+ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-4.0.2
 #ARG BASE_CONTAINER=$OWNER/minimal-notebook
 #ARG BASE_CONTAINER=$OWNER/minimal-notebook:python-3.9.13
 FROM $BASE_CONTAINER
@@ -39,7 +39,7 @@ USER ${NB_UID}
 RUN conda install -n base -c conda-forge mamba conda==4.12.0
 #RUN conda install mamba
 
-ARG GAMMAPY_REVISION=1.1
+ARG GAMMAPY_REVISION=1.2
 #RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_REVISION
 RUN curl -o environment.yml https://gammapy.org/download/install/gammapy-${GAMMAPY_REVISION}-environment.yml && \
     #mamba env update -n base -f environment.yml && \
