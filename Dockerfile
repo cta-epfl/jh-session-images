@@ -36,7 +36,7 @@ USER ${NB_UID}
 #     rm environment.yml
 
 #RUN conda update -n base -c conda-forge conda
-RUN conda install -n base -c conda-forge mamba conda==4.12.0
+RUN conda install -n base -c conda-forge mamba conda
 #RUN conda install mamba
 
 ARG GAMMAPY_REVISION=1.2
