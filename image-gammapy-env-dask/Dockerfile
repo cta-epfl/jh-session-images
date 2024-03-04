@@ -22,7 +22,8 @@ RUN apt-get update --yes && \
     cm-super \
     dvipng \
     # for wheel
-    bison byacc \
+    bison \
+    byacc \
     # for matplotlib anim
     ffmpeg \
     curl && \
