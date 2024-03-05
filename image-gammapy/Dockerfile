@@ -1,7 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-3.1.1
+ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-4.0.2
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -19,6 +19,11 @@ RUN apt-get update --yes && \
     # for latex labels
     cm-super \
     dvipng \
+    # for wheel
+    bison \
+    byacc \
+    flex \
+    zlib1g-dev \
     # for matplotlib anim
     ffmpeg && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -39,8 +44,6 @@ RUN mamba install --quiet --yes \
     'h5py' \
     'ipympl'\
     'ipywidgets' \
-    # Temporary fix for: https://github.com/jupyter/docker-stacks/issues/1851
-    'jupyter_server>=2.0.0' \
     'matplotlib-base' \
     'numba' \
     'numexpr' \
@@ -58,19 +61,27 @@ RUN mamba install --quiet --yes \
     'sympy' \
     'widgetsnbextension'\
     'xlrd' \
+    'healpy' \
+    'dask-labextension' \
+    'jupyterlab' \
+    'pip' \
+    'dask-gateway~=2024.1.0' \
     && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-ARG GAMMAPY_REVISION=v1.1
+RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6'
+
+ARG GAMMAPY_REVISION=v1.2
 RUN pip install gammapy==$GAMMAPY_REVISION astropy regions matplotlib scipy
 #RUN mamba install -c conda-forge gammapy=v$GAMMAPY_REVISION # astropy regions matplotlib scipy
 
-RUN mamba install -c conda-forge dask-labextension && \
-    jupyter labextension install dask-labextension
+# DEPRECATED install way :
+# RUN mamba install -c conda-forge dask-labextension && \
+#     jupyter labextension install dask-labextension
 
-RUN jupyter serverextension enable --py --sys-prefix dask_labextension
+# RUN jupyter serverextension enable --py --sys-prefix dask_labextension
 
 # Install facets which does not have a pip or conda package at the moment
 # WORKDIR /tmp
@@ -105,10 +116,9 @@ RUN pip install \
 		astropy==5.3 \
 		regions==0.7 \
 		iminuit==2.21 \
-		healpy==1.16 \
 		naima==0.10 \
-		pydantic==1.9 \
-		emcee==3.1.3 
+		pydantic==2.5 \
+		emcee==3.1 
 		#sherpa==4.15 \
 		#pyyaml==6.0  \
 		#click==8.1.3 \

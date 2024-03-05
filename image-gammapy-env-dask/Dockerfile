@@ -64,7 +64,6 @@ RUN mamba install -c conda-forge --quiet --yes \
     'h5py' \
     'ipympl'\
     'ipywidgets' \
-    'jupyter_server>=2.0.0' \
     'matplotlib-base' \
     'numba' \
     'numexpr' \
