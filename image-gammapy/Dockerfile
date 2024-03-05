@@ -23,6 +23,7 @@ RUN apt-get update --yes && \
     bison \
     byacc \
     flex \
+    zlib1g-dev \
     # for matplotlib anim
     ffmpeg && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -79,7 +80,7 @@ RUN pip install gammapy==$GAMMAPY_REVISION astropy regions matplotlib scipy
 # RUN mamba install -c conda-forge dask-labextension && \
 #     jupyter labextension install dask-labextension
 
-RUN jupyter serverextension enable --py --sys-prefix dask_labextension
+# RUN jupyter serverextension enable --py --sys-prefix dask_labextension
 
 # Install facets which does not have a pip or conda package at the moment
 # WORKDIR /tmp
@@ -117,7 +118,7 @@ RUN pip install \
 		healpy==1.16 \
 		naima==0.10 \
 		pydantic==2.5 \
-		emcee==3.1.3 
+		emcee==3.1 
 		#sherpa==4.15 \
 		#pyyaml==6.0  \
 		#click==8.1.3 \
