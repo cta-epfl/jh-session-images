@@ -61,6 +61,7 @@ RUN mamba install --quiet --yes \
     'sympy' \
     'widgetsnbextension'\
     'xlrd' \
+    'healpy' \
     'dask-labextension' \
     'jupyterlab' \
     'pip' \
@@ -115,7 +116,6 @@ RUN pip install \
 		astropy==5.3 \
 		regions==0.7 \
 		iminuit==2.21 \
-		healpy==1.16 \
 		naima==0.10 \
 		pydantic==2.5 \
 		emcee==3.1 
