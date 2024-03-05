@@ -1,7 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-3.1.1
+ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-4.0.2
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -19,6 +19,10 @@ RUN apt-get update --yes && \
     # for latex labels
     cm-super \
     dvipng \
+    # for wheel
+    bison \
+    byacc \
+    flex \
     # for matplotlib anim
     ffmpeg && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -107,7 +111,7 @@ RUN pip install \
 		iminuit==2.21 \
 		healpy==1.16 \
 		naima==0.10 \
-		pydantic==1.9 \
+		pydantic==2.5 \
 		emcee==3.1.3 
 		#sherpa==4.15 \
 		#pyyaml==6.0  \
