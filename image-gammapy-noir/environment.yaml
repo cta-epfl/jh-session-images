@@ -7,7 +7,7 @@ variables:
 
 dependencies:
   - python=3.9
-  - gammapy=1.1
+  - gammapy=1.2
   - ipython=8.7.0
   - cython
   - jupyter

@@ -63,7 +63,7 @@ RUN mamba install --quiet --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-ARG GAMMAPY_REVISION=v1.1
+ARG GAMMAPY_REVISION=v1.2
 RUN pip install gammapy==$GAMMAPY_REVISION astropy regions matplotlib scipy
 #RUN mamba install -c conda-forge gammapy=v$GAMMAPY_REVISION # astropy regions matplotlib scipy
 
