@@ -43,8 +43,6 @@ RUN mamba install --quiet --yes \
     'h5py' \
     'ipympl'\
     'ipywidgets' \
-    # Temporary fix for: https://github.com/jupyter/docker-stacks/issues/1851
-    'jupyter_server>=2.0.0' \
     'matplotlib-base' \
     'numba' \
     'numexpr' \
@@ -62,17 +60,24 @@ RUN mamba install --quiet --yes \
     'sympy' \
     'widgetsnbextension'\
     'xlrd' \
+    'dask-labextension' \
+    'jupyterlab' \
+    'pip' \
+    'dask-gateway~=2024.1.0' \
     && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
+RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6'
+
 ARG GAMMAPY_REVISION=v1.2
 RUN pip install gammapy==$GAMMAPY_REVISION astropy regions matplotlib scipy
 #RUN mamba install -c conda-forge gammapy=v$GAMMAPY_REVISION # astropy regions matplotlib scipy
 
-RUN mamba install -c conda-forge dask-labextension && \
-    jupyter labextension install dask-labextension
+# DEPRECATED install way :
+# RUN mamba install -c conda-forge dask-labextension && \
+#     jupyter labextension install dask-labextension
 
 RUN jupyter serverextension enable --py --sys-prefix dask_labextension
 
