@@ -33,7 +33,7 @@ jobs:
 
     strategy:
       matrix:
-        image_version: ["image-gammapy", "image-gammapy-env-dask"] #, "image-gammapy-noir"]
+        image_version: ["image-gammapy", "image-gammapy-env-dask", "image-datascience-notebook"] #, "image-gammapy-noir"]
 
     steps:
       - name: Checkout repository
