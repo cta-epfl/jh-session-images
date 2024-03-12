@@ -33,7 +33,13 @@ jobs:
 
     strategy:
       matrix:
-        image_version: ["image-gammapy", "image-gammapy-env-dask", "image-datascience-notebook", "image-gammapy-noir"]
+        image_version:
+          [
+            "gammapy",
+            "gammapy-env-dask",
+            "datascience-notebook",
+            "gammapy-noir",
+          ]
 
     steps:
       - name: Checkout repository
@@ -67,7 +73,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.image_version }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.image_version }}
           # git log -n 1 --format="%h" -- .
 
       # Build and push Docker image with Buildx (don't push on PR)
