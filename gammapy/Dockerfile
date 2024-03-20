@@ -75,7 +75,7 @@ RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6'
 
 ARG GAMMAPY_REVISION
 RUN test -n "$GAMMAPY_REVISION"
-RUN pip install gammapy==$GAMMAPY_REVISION astropy regions matplotlib scipy
+RUN pip install gammapy==v$GAMMAPY_REVISION astropy regions matplotlib scipy
 #RUN mamba install -c conda-forge gammapy=v$GAMMAPY_REVISION # astropy regions matplotlib scipy
 
 # DEPRECATED install way :

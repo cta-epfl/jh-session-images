@@ -36,17 +36,17 @@ jobs:
         include:
           - image_version: gammapy
             singularity: false
-            gammapy_tag: v1.2
+            gammapy_tag: 1.2
             # lstchain_tag:
 
           - image_version: gammapy-env-dask
             singularity: false
-            gammapy_tag: v1.2
+            gammapy_tag: 1.2
             # lstchain_tag:
 
           - image_version: gammapy-noir
             singularity: false
-            gammapy_tag: v1.2
+            gammapy_tag: 1.2
             # lstchain_tag:
 
     steps:
