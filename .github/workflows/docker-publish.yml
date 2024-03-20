@@ -37,17 +37,17 @@ jobs:
           - image_version: gammapy
             singularity: false
             gammapy_tag: 1.2
-            # lstchain_tag:
+            lstchain_tag: 0.10.8
 
           - image_version: gammapy-env-dask
             singularity: false
             gammapy_tag: 1.2
-            # lstchain_tag:
+            lstchain_tag: 0.10.8
 
           - image_version: gammapy-noir
             singularity: false
             gammapy_tag: 1.2
-            # lstchain_tag:
+            lstchain_tag: 0.10.8
 
     steps:
       - name: Checkout repository
@@ -81,7 +81,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          labels: GAMMAPY_REVISION=${{ matrix.gammapy_tag }}
+          labels: GAMMAPY_VERSION=${{ matrix.gammapy_tag }} LSTCHAIN_VERSION=${{ matrix.lstchain_tag }}
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.image_version }}
           # git log -n 1 --format="%h" -- .
 
@@ -97,7 +97,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
-          build-args: GAMMAPY_REVISION=${{ matrix.gammapy_tag }}
+          build-args: GAMMAPY_VERSION=${{ matrix.gammapy_tag }} LSTCHAIN_VERSION=${{ matrix.lstchain_tag }}
           cache-to: type=gha,mode=max
 
       # Sign the resulting Docker image digest except on PRs.

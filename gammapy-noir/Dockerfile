@@ -25,20 +25,21 @@ RUN apt-get update --yes && \
 
 
 
-#ARG LSTCHAIN_VER=0.10.7
-#RUN wget https://raw.githubusercontent.com/cta-observatory/cta-lstchain/v$LSTCHAIN_VER/environment.yml 
+ARG LSTCHAIN_VERSION
+RUN test -n "$LSTCHAIN_VERSION"
+# RUN wget https://raw.githubusercontent.com/cta-observatory/cta-lstchain/v$LSTCHAIN_VERSION/environment.yml 
 #    conda env update --file environment.yml 
     #conda env create -n lst -f environment.yml 
 
 # && \
-#RUN conda init bash && \
+# RUN conda init bash && \
 #    conda activate lst && \
-#RUN mamba env update --name base --file environment.yml
+# RUN mamba env update --name base --file environment.yml
 
 COPY environment.yaml env.yml
 RUN mamba env update --name base --file env.yml
 
-#RUN curl -O https://gammapy.org/download/install/gammapy-1.1-environment.yml && \
+# RUN curl -O https://gammapy.org/download/install/gammapy-1.1-environment.yml && \
 #    mamba env create -n gammapy -f gammapy-1.1-environment.yml
 
 
@@ -46,7 +47,7 @@ RUN mamba env update --name base --file env.yml
 RUN pip install \
 	'jupyter_server>=2.0.0'  \
          jupyterhub\>=4.0.0 \
-	'lstchain==0.10.7'
+	'lstchain==$LSTCHAIN_VERSION'
 
 RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6'
 
@@ -55,11 +56,11 @@ RUN fix-permissions "${CONDA_DIR}" && \
 
 USER ${NB_UID}
 
-#RUN conda install -c conda-forge gammapy>=1.1
-#RUN conda install -c conda-forge dask-labextension && \
+# RUN conda install -c conda-forge gammapy>=1.1
+# RUN conda install -c conda-forge dask-labextension && \
 #    jupyter labextension install dask-labextension
 
-#RUN jupyter serverextension enable --py --sys-prefix dask_labextension
+# RUN jupyter serverextension enable --py --sys-prefix dask_labextension
 
 # Install facets which does not have a pip or conda package at the moment
 # WORKDIR /tmp
@@ -75,15 +76,15 @@ ENV XDG_CACHE_HOME="/home/${NB_USER}/.cache/"
 # RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
 #     fix-permissions "/home/${NB_USER}"
 
-#RUN pip install astropy regions matplotlib scipy\<1.10 
+# RUN pip install astropy regions matplotlib scipy\<1.10 
 
-#ARG GAMMAPY_REVISION=v1.0
-#RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_REVISION
+# ARG GAMMAPY_VERSION=v1.0
+# RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_VERSION
 
-#RUN mamba init; bash -c 'mamba activate gammapy; python -m ipykernel install --user --name testenv --display-name "Python (testenv)"'
+# RUN mamba init; bash -c 'mamba activate gammapy; python -m ipykernel install --user --name testenv --display-name "Python (testenv)"'
 
 USER ${NB_UID}
 
-#ADD dask.yaml /etc/dask/dask.yaml
+# ADD dask.yaml /etc/dask/dask.yaml
 
 WORKDIR "${HOME}"

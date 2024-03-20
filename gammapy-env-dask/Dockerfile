@@ -2,8 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 ARG OWNER=jupyter
 ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-4.0.2
-#ARG BASE_CONTAINER=$OWNER/minimal-notebook
-#ARG BASE_CONTAINER=$OWNER/minimal-notebook:python-3.9.13
+# ARG BASE_CONTAINER=$OWNER/minimal-notebook
+# ARG BASE_CONTAINER=$OWNER/minimal-notebook:python-3.9.13
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -33,20 +33,21 @@ RUN apt-get update --yes && \
 USER ${NB_UID}
 
 
-# ARG LSTCHAIN_VER=0.9.6 
-# RUN wget https://raw.githubusercontent.com/cta-observatory/cta-lstchain/v$LSTCHAIN_VER/environment.yml && \
+# ARG LSTCHAIN_VERSION
+# RUN test -n "$LSTCHAIN_VERSION"
+# RUN wget https://raw.githubusercontent.com/cta-observatory/cta-lstchain/v$LSTCHAIN_VERSION/environment.yml && \
 #     conda env update -n base -f environment.yml && \
-#     pip install lstchain==$LSTCHAIN_VER && \
+#     pip install lstchain==$LSTCHAIN_VERSION && \
 #     rm environment.yml
 
-#RUN conda update -n base -c conda-forge conda
+# RUN conda update -n base -c conda-forge conda
 RUN conda install -n base -c conda-forge mamba conda
-#RUN conda install mamba
+# RUN conda install mamba
 
-ARG GAMMAPY_REVISION
-RUN test -n "$GAMMAPY_REVISION"
-#RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_REVISION
-RUN curl -o environment.yml https://gammapy.org/download/install/gammapy-${GAMMAPY_REVISION}-environment.yml && \
+ARG GAMMAPY_VERSION
+RUN test -n "$GAMMAPY_VERSION"
+# RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_VERSION
+RUN curl -o environment.yml https://gammapy.org/download/install/gammapy-${GAMMAPY_VERSION}-environment.yml && \
     #mamba env update -n base -f environment.yml && \
     mamba env create -f environment.yml && \
     rm environment.yml
@@ -93,10 +94,10 @@ RUN mamba install -c conda-forge --quiet --yes \
 
 RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6'
 
-    #mamba activate gammapy-${GAMMAPY_REVISION} && \
-RUN mamba install -n gammapy-$GAMMAPY_REVISION ipykernel && \
-    mamba run -n gammapy-$GAMMAPY_REVISION python -m ipykernel install --user --name gammapy-$GAMMAPY_REVISION --display-name gammapy\ $GAMMAPY_REVISION 
-    #mamba run -n gammapy-$GAMMAPY_REVISION python -m ipykernel install --user --name gammapy-$GAMMAPY_REVISION --display-name gammapy\ $GAMMAPY_REVISION 
+    #mamba activate gammapy-${GAMMAPY_VERSION} && \
+RUN mamba install -n gammapy-$GAMMAPY_VERSION ipykernel && \
+    mamba run -n gammapy-$GAMMAPY_VERSION python -m ipykernel install --user --name gammapy-$GAMMAPY_VERSION --display-name gammapy\ $GAMMAPY_VERSION 
+    #mamba run -n gammapy-$GAMMAPY_VERSION python -m ipykernel install --user --name gammapy-$GAMMAPY_VERSION --display-name gammapy\ $GAMMAPY_VERSION 
    
 
 RUN mamba install traitlets==5.9.0 -c conda-forge
