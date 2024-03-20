@@ -81,7 +81,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          labels: GAMMAPY_VERSION=${{ matrix.gammapy_tag }} LSTCHAIN_VERSION=${{ matrix.lstchain_tag }}
+          labels: |
+            GAMMAPY_VERSION=${{ matrix.gammapy_tag }}
+            LSTCHAIN_VERSION=${{ matrix.lstchain_tag }}
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.image_version }}
           # git log -n 1 --format="%h" -- .
 
@@ -97,7 +99,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
-          build-args: GAMMAPY_VERSION=${{ matrix.gammapy_tag }} LSTCHAIN_VERSION=${{ matrix.lstchain_tag }}
+          build-args: |
+            GAMMAPY_VERSION=${{ matrix.gammapy_tag }}
+            LSTCHAIN_VERSION=${{ matrix.lstchain_tag }}
           cache-to: type=gha,mode=max
 
       # Sign the resulting Docker image digest except on PRs.
