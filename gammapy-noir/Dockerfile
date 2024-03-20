@@ -45,9 +45,9 @@ RUN mamba env update --name base --file env.yml
 
     #pandas==1.4.1 \
 RUN pip install \
-	'jupyter_server>=2.0.0'  \
-         jupyterhub\>=4.0.0 \
-	'lstchain==$LSTCHAIN_VERSION'
+	jupyter_server>=2.0.0  \
+    jupyterhub\>=4.0.0 \
+	lstchain==$LSTCHAIN_VERSION
 
 RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6'
 
