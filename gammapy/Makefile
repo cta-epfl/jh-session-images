@@ -1,10 +1,10 @@
 tag:=$(shell find -type f -exec cat '{}' \; | md5sum | cut -c1-8)
-gammapy_revision?=1.2
+GAMMAPY_VERSION?=1.2
 
-image:=odahub/jh-cta:$(tag)-gammapy-$(gammapy_revision)
+image:=odahub/jh-cta:$(tag)-gammapy-$(GAMMAPY_VERSION)
 
 build:
-	docker build --build-arg GAMMAPY_REVISION=${gammapy_revision} -t $(image) .
+	docker build --build-arg GAMMAPY_VERSION=${GAMMAPY_VERSION} -t $(image) .
 
 push:
 	docker push $(image)

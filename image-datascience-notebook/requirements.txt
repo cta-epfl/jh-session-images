@@ -1,4 +1,0 @@
-ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6
-dask-gateway ~= 2024.1.0
-jupyter_collaboration ~= 2.0.1
-# dask-labextension ~= 7.0.0

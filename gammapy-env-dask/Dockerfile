@@ -2,6 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 ARG OWNER=jupyter
 ARG BASE_CONTAINER=$OWNER/minimal-notebook:hub-4.0.2
+# ARG BASE_CONTAINER=$OWNER/minimal-notebook
+# ARG BASE_CONTAINER=$OWNER/minimal-notebook:python-3.9.13
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -23,15 +25,35 @@ RUN apt-get update --yes && \
     bison \
     byacc \
     flex \
-    zlib1g-dev \
     # for matplotlib anim
-    ffmpeg && \
+    ffmpeg \
+    curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER ${NB_UID}
 
+
+# ARG LSTCHAIN_VERSION
+# RUN test -n "$LSTCHAIN_VERSION"
+# RUN wget https://raw.githubusercontent.com/cta-observatory/cta-lstchain/v$LSTCHAIN_VERSION/environment.yml && \
+#     conda env update -n base -f environment.yml && \
+#     pip install lstchain==$LSTCHAIN_VERSION && \
+#     rm environment.yml
+
+# RUN conda update -n base -c conda-forge conda
+RUN conda install -n base -c conda-forge mamba conda
+# RUN conda install mamba
+
+ARG GAMMAPY_VERSION
+RUN test -n "$GAMMAPY_VERSION"
+# RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_VERSION
+RUN curl -o environment.yml https://gammapy.org/download/install/gammapy-${GAMMAPY_VERSION}-environment.yml && \
+    #mamba env update -n base -f environment.yml && \
+    mamba env create -f environment.yml && \
+    rm environment.yml
+
 # Install Python 3 packages
-RUN mamba install --quiet --yes \
+RUN mamba install -c conda-forge --quiet --yes \
     'altair' \
     'beautifulsoup4' \
     'bokeh' \
@@ -61,7 +83,6 @@ RUN mamba install --quiet --yes \
     'sympy' \
     'widgetsnbextension'\
     'xlrd' \
-    'healpy' \
     'dask-labextension' \
     'jupyterlab' \
     'pip' \
@@ -73,13 +94,16 @@ RUN mamba install --quiet --yes \
 
 RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6'
 
-ARG GAMMAPY_REVISION=v1.2
-RUN pip install gammapy==$GAMMAPY_REVISION astropy regions matplotlib scipy
-#RUN mamba install -c conda-forge gammapy=v$GAMMAPY_REVISION # astropy regions matplotlib scipy
+    #mamba activate gammapy-${GAMMAPY_VERSION} && \
+RUN mamba install -n gammapy-$GAMMAPY_VERSION ipykernel && \
+    mamba run -n gammapy-$GAMMAPY_VERSION python -m ipykernel install --user --name gammapy-$GAMMAPY_VERSION --display-name gammapy\ $GAMMAPY_VERSION 
+    #mamba run -n gammapy-$GAMMAPY_VERSION python -m ipykernel install --user --name gammapy-$GAMMAPY_VERSION --display-name gammapy\ $GAMMAPY_VERSION 
+   
 
-# DEPRECATED install way :
-# RUN mamba install -c conda-forge dask-labextension && \
-#     jupyter labextension install dask-labextension
+RUN mamba install traitlets==5.9.0 -c conda-forge
+
+
+# RUN jupyter labextension install dask-labextension 
 
 # RUN jupyter serverextension enable --py --sys-prefix dask_labextension
 
@@ -97,36 +121,12 @@ ENV XDG_CACHE_HOME="/home/${NB_USER}/.cache/"
 # RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
 #     fix-permissions "/home/${NB_USER}"
 
-
-USER root
-
-RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends \
-	    yacc flex && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# RUN pip install astropy regions matplotlib scipy\<1.10 
 
 USER ${NB_UID}
 
 ADD dask.yaml /etc/dask/dask.yaml
 
-	#scipy\<1.12 astropy\<6 pydantic==1.9
-RUN pip install \
-		scipy==1.10.1 \
-		pandas==1.5.2 \
-		astropy==5.3 \
-		regions==0.7 \
-		iminuit==2.21 \
-		naima==0.10 \
-		pydantic==2.5 \
-		emcee==3.1 
-		#sherpa==4.15 \
-		#pyyaml==6.0  \
-		#click==8.1.3 \
-		#numpy==1.24 \
-		#matplotlib==3.7 \
-		#corner==2.2.1
-
-
-RUN gammapy --version
-
 WORKDIR "${HOME}"
+
+
