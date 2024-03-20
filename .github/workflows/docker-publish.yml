@@ -33,11 +33,18 @@ jobs:
 
     strategy:
       matrix:
-        image_version:
-          - "gammapy"
-          - "gammapy-env-dask"
-          - "datascience-notebook"
-          - "gammapy-noir"
+        include:
+          - image_version: gammapy
+            singularity: false
+
+          - image_version: gammapy-env-dask
+            singularity: false
+
+          - image_version: datascience-notebook
+            singularity: false
+
+          - image_version: gammapy-noir
+            singularity: false
 
     steps:
       - name: Checkout repository
