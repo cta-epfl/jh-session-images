@@ -43,7 +43,8 @@ USER ${NB_UID}
 RUN conda install -n base -c conda-forge mamba conda
 #RUN conda install mamba
 
-ARG GAMMAPY_REVISION=1.2
+ARG GAMMAPY_REVISION
+RUN test -n "$GAMMAPY_REVISION"
 #RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_REVISION
 RUN curl -o environment.yml https://gammapy.org/download/install/gammapy-${GAMMAPY_REVISION}-environment.yml && \
     #mamba env update -n base -f environment.yml && \
