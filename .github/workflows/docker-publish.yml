@@ -34,17 +34,23 @@ jobs:
     strategy:
       matrix:
         include:
-          - image_version: gammapy
-            singularity: false
-
-          - image_version: gammapy-env-dask
-            singularity: false
-
           - image_version: datascience-notebook
             singularity: false
 
+          - image_version: gammapy
+            singularity: false
+            gammapy_tag: 1.2
+            # lstchain_tag:
+
+          - image_version: gammapy-env-dask
+            singularity: false
+            gammapy_tag: 1.2
+            # lstchain_tag:
+
           - image_version: gammapy-noir
             singularity: false
+            gammapy_tag: 1.2
+            # lstchain_tag:
 
     steps:
       - name: Checkout repository
