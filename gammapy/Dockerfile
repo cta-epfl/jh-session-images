@@ -25,7 +25,6 @@ RUN apt-get update --yes && \
     flex \
     zlib1g-dev \
     # for matplotlib anim
-    fusermount \
     fuse \
     ffmpeg \
     rclone && \
