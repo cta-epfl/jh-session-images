@@ -20,7 +20,8 @@ RUN apt-get update --yes && \
     cm-super \
     dvipng \
     # for matplotlib anim
-    ffmpeg && \
+    ffmpeg \
+    rclone && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
