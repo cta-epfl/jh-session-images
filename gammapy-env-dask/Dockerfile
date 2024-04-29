@@ -28,6 +28,7 @@ RUN apt-get update --yes && \
     # for matplotlib anim
     ffmpeg \
     rclone \
+    fuse \
     curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 

@@ -21,6 +21,7 @@ RUN apt-get update --yes && \
     dvipng \
     # for matplotlib anim
     ffmpeg \
+    fuse \
     rclone && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
