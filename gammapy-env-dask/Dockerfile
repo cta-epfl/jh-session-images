@@ -92,7 +92,7 @@ RUN mamba install -c conda-forge --quiet --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.4.6'
+RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.2'
 
     #mamba activate gammapy-${GAMMAPY_VERSION} && \
 RUN mamba install -n gammapy-$GAMMAPY_VERSION ipykernel && \
