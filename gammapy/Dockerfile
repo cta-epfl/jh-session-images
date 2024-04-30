@@ -25,7 +25,9 @@ RUN apt-get update --yes && \
     flex \
     zlib1g-dev \
     # for matplotlib anim
-    ffmpeg && \
+    fuse \
+    ffmpeg \
+    rclone && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER ${NB_UID}
