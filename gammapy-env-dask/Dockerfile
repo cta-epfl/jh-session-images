@@ -96,9 +96,9 @@ RUN mamba install -c conda-forge --quiet --yes \
 
 RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.2'
 
-ARG LST_VERSION
-RUN test -n "$LST_VERSION"
-RUN pip install lst_version==v$LST_VERSION
+ARG LSTCHAIN_VERSION
+RUN test -n "$LSTCHAIN_VERSION"
+RUN pip install lst_version==v$LSTCHAIN_VERSION
 
     #mamba activate gammapy-${GAMMAPY_VERSION} && \
 RUN mamba install -n gammapy-$GAMMAPY_VERSION ipykernel && \

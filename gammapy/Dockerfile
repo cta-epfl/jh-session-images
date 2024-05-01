@@ -80,9 +80,9 @@ RUN test -n "$GAMMAPY_VERSION"
 RUN pip install gammapy==v$GAMMAPY_VERSION astropy regions matplotlib scipy
 #RUN mamba install -c conda-forge gammapy=v$GAMMAPY_VERSION # astropy regions matplotlib scipy
 
-ARG LST_VERSION
-RUN test -n "$LST_VERSION"
-RUN pip install lst_version==v$LST_VERSION
+ARG LSTCHAIN_VERSION
+RUN test -n "$LSTCHAIN_VERSION"
+RUN pip install lst_version==v$LSTCHAIN_VERSION
 
 # DEPRECATED install way :
 # RUN mamba install -c conda-forge dask-labextension && \
