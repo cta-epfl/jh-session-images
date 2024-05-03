@@ -37,17 +37,17 @@ jobs:
           - image_version: gammapy
             singularity: false
             gammapy_tag: 1.2
-            lstchain_tag: 0.10.10
+            lstchain_tag: 0.10.7
 
           - image_version: gammapy-env-dask
             singularity: false
             gammapy_tag: 1.2
-            lstchain_tag: 0.10.10
+            lstchain_tag: 0.10.7
 
           - image_version: gammapy-noir
             singularity: false
             gammapy_tag: 1.2
-            lstchain_tag: 0.10.10
+            lstchain_tag: 0.10.7
 
     steps:
       - name: Checkout repository
