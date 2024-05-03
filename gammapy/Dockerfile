@@ -55,7 +55,7 @@ RUN mamba install --quiet --yes \
     'protobuf' \
     'pytables' \
     'scikit-image' \
-    'scikit-learn' \
+    'scikit-learn==1.2.2' \
     'scipy' \
     'seaborn' \
     'sqlalchemy' \
