@@ -73,7 +73,7 @@ RUN mamba install --quiet --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.2'
+RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.3'
 
 ARG GAMMAPY_VERSION
 RUN test -n "$GAMMAPY_VERSION"
