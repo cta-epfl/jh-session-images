@@ -51,7 +51,7 @@ RUN pip install \
     jupyterhub\>=4.0.0 \
 	lstchain==$LSTCHAIN_VERSION
 
-RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.4'
+RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.5'
 
 RUN fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
