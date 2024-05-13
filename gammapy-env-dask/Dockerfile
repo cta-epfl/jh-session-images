@@ -94,7 +94,7 @@ RUN mamba install -c conda-forge --quiet --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.6'
+RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.7'
 
 ARG LSTCHAIN_VERSION
 RUN test -n "$LSTCHAIN_VERSION"
