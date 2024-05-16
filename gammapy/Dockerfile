@@ -76,13 +76,10 @@ RUN mamba install --quiet --yes \
 RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.7'
 
 ARG GAMMAPY_VERSION
-RUN test -n "$GAMMAPY_VERSION"
-RUN pip install gammapy==v$GAMMAPY_VERSION astropy regions matplotlib scipy
-#RUN mamba install -c conda-forge gammapy=v$GAMMAPY_VERSION # astropy regions matplotlib scipy
-
 ARG LSTCHAIN_VERSION
-RUN test -n "$LSTCHAIN_VERSION"
-RUN pip install lstchain==$LSTCHAIN_VERSION
+
+RUN test -n "$GAMMAPY_VERSION" && pip install gammapy==v$GAMMAPY_VERSION astropy regions matplotlib scipy
+RUN test -n "$LSTCHAIN_VERSION" && pip install lstchain==$LSTCHAIN_VERSION
 
 # DEPRECATED install way :
 # RUN mamba install -c conda-forge dask-labextension && \

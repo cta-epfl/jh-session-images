@@ -47,9 +47,8 @@ RUN conda install -n base -c conda-forge mamba conda
 # RUN conda install mamba
 
 ARG GAMMAPY_VERSION
-RUN test -n "$GAMMAPY_VERSION"
-# RUN pip install git+https://github.com/gammapy/gammapy/@$GAMMAPY_VERSION
-RUN curl -o environment.yml https://gammapy.org/download/install/gammapy-${GAMMAPY_VERSION}-environment.yml && \
+RUN test -n "$GAMMAPY_VERSION" && \
+    curl -o environment.yml https://gammapy.org/download/install/gammapy-${GAMMAPY_VERSION}-environment.yml && \
     #mamba env update -n base -f environment.yml && \
     mamba env create -f environment.yml && \
     rm environment.yml
@@ -92,22 +91,16 @@ RUN mamba install -c conda-forge --quiet --yes \
     && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.7'
+    fix-permissions "/home/${NB_USER}" && \
+    pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.7'
 
 ARG LSTCHAIN_VERSION
-RUN test -n "$LSTCHAIN_VERSION"
-RUN pip install lstchain==$LSTCHAIN_VERSION
+RUN test -n "$LSTCHAIN_VERSION" && pip install lstchain==$LSTCHAIN_VERSION
 
     #mamba activate gammapy-${GAMMAPY_VERSION} && \
 RUN mamba install -n gammapy-$GAMMAPY_VERSION ipykernel && \
-    mamba run -n gammapy-$GAMMAPY_VERSION python -m ipykernel install --user --name gammapy-$GAMMAPY_VERSION --display-name gammapy\ $GAMMAPY_VERSION 
-    #mamba run -n gammapy-$GAMMAPY_VERSION python -m ipykernel install --user --name gammapy-$GAMMAPY_VERSION --display-name gammapy\ $GAMMAPY_VERSION 
-   
-
-RUN mamba install traitlets==5.9.0 -c conda-forge
-
+    mamba run -n gammapy-$GAMMAPY_VERSION python -m ipykernel install --user --name gammapy-$GAMMAPY_VERSION --display-name gammapy\ $GAMMAPY_VERSION  && \
+    mamba install traitlets==5.9.0 -c conda-forge
 
 # RUN jupyter labextension install dask-labextension 
 

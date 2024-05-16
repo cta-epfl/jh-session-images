@@ -49,9 +49,8 @@ RUN mamba env update --name base --file env.yml
 RUN pip install \
 	jupyter_server>=2.0.0  \
     jupyterhub\>=4.0.0 \
-	lstchain==$LSTCHAIN_VERSION
-
-RUN pip install 'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.7'
+	lstchain==$LSTCHAIN_VERSION \
+    'ctadata @ git+https://github.com/cta-epfl/ctadata.git@v0.5.7'
 
 RUN fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
